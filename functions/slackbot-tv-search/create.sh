@@ -1,5 +1,7 @@
 #!/bin/bash
 dir_name=${PWD##*/}
+echo "Copying helper functions"
+cp ../helper.py package/
 echo "Zipping up $dir_name"
 zip -jr $dir_name.zip package/
 echo "Creating $dir_name Package"
@@ -10,3 +12,5 @@ echo "Creating $dir_name route"
 fission route create --name $dir_name --function $dir_name --url $dir_name --method POST 
 echo "Deleting $dir_name.zip"
 rm -f $dir_name.zip
+echo "Deleting Helper Functions"
+rm -f ./package/helper.py

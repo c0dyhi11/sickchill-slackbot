@@ -1,6 +1,7 @@
 import json
 import requests
 import urllib.parse
+from helper import fetch_kube_data
 from flask import request, Response
 from flask import current_app
 
@@ -41,7 +42,7 @@ def build_message(shows, search_text, user):
                                   "type": "section",
                                   "text": {
                                     "type": "mrkdwn",
-                                    "text": "Select a show from above to add:"
+                                    "text": "Select a show from above to be added to the search queue:"
                                   },
                                   "accessory": {
                                     "type": "static_select",
@@ -67,7 +68,7 @@ def build_message(shows, search_text, user):
     downloadable_show = False
     for show in sort_shows_by_attainment:
         if show['in_show_list']:
-            text_body += ":warning:   <{}{}|{}>   ({})   `[Already Added]`\n".format(url_prefix, str(show['tvdbid']), show['name'], show['first_aired'])
+            text_body += ":warning:   <{}{}|{}>   ({})   `[Already Added to Search Queue]`\n".format(url_prefix, str(show['tvdbid']), show['name'], show['first_aired'])
         else:
             downloadable_show = True
             text_body += ":large_blue_circle:   <{}{}| {}>   ({})\n".format(url_prefix, str(show['tvdbid']), show['name'], show['first_aired'])
@@ -76,7 +77,8 @@ def build_message(shows, search_text, user):
                                 "text": "{}   ({})".format(show['name'], show['first_aired']),
                                 "emoji": False
                             },
-                            "value": str(show['tvdbid'])})
+                            "value": "{}|{}".format(show['name'],str(show['tvdbid']))
+                            })
     options.append({"text": {
                     "type": "plain_text",
                     "text": "*Cancel*",
@@ -103,22 +105,6 @@ def slack_webhook(url, payload):
     print(json.dumps(payload))
     rest_call = requests.post(url, headers=headers, data=json.dumps(payload))
     return rest_call.text
-
-
-def fetch_kube_data(data_type, namespace, secret_name, secret_key):
-    if data_type.lower() == "secret":
-        data_type = "secrets"
-    elif data_type.lower() == "configmap":
-        data_type = "configs"
-    elif data_type.lower() == "config":
-        data_type = "configs"
-    else:
-        data_type = data_type.lower()
-    path = "/{}/{}/{}/{}".format(data_type, namespace, secret_name, secret_key)
-    f = open(path, "r")
-    kube_data = f.read()
-    f.close()
-    return kube_data
 
 
 def main():

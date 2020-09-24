@@ -1,5 +1,7 @@
 #!/bin/bash
 dir_name=${PWD##*/}
+echo "Copying helper functions"
+cp ../helper.py package/
 echo "Zipping up $dir_name"
 zip -jr $dir_name.zip package/
 echo "Updating $dir_name Package"
@@ -8,3 +10,5 @@ echo "Updating $dir_name Function"
 fission fn update --name $dir_name --pkg $dir_name --entrypoint "function.main" --secret slackbot
 echo "Deleting $dir_name.zip"
 rm -f $dir_name.zip
+echo "Deleting Helper Functions"
+rm -f ./package/helper.py
