@@ -1,8 +1,14 @@
 # sickchill-slackbot
 This is a Slackbot desinged to allow the ability to add shows to sickchill, sickbeard, and/or sickrage. It is built on top of the Fission Serverless Framework
 
+## TODO
+### We should be using repsonse URLs and delete source messages: 
+https://api.slack.com/interactivity/handling#updating_message_response
 
-### Kubernetes Secret
+https://api.slack.com/interactivity/handling#deleting_message_response
+
+
+### Write a doc on this: Kubernetes Secret
 You will need to create a k8s secret with the following data.
 ```bash
 kubectl -n default create secret generic slackbot \

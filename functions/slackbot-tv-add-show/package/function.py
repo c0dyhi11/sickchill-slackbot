@@ -42,6 +42,7 @@ def main():
         return "Unauthorized", 200
 
     json_payload = json.loads(urllib.parse.unquote_plus(request_body)[8:])
+    current_app.logger.info(json.dumps(json_payload))
     show = json_payload['actions'][0]['selected_option']['value']
     if show[0:6] == "cancel":
         return "ok", 200
