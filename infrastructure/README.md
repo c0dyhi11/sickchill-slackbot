@@ -123,9 +123,10 @@ This app is used as a landing zone to redirect an insecure endpoint from Fission
 To deploy Ah-Ah-Ah run the following commands:
 ```bash
 export AHAHAH_NAMESPACE="ah-ah-ah"
-kubectl -n $AHAHAH_NAMESPACE apply --validate=false https://raw.githubusercontent.com/c0dyhi11/ah-ah-ah/master/ah-ah-ah/ah-ah-ah.configmap.yaml
-kubectl -n $AHAHAH_NAMESPACE apply --validate=false https://raw.githubusercontent.com/c0dyhi11/ah-ah-ah/master/ah-ah-ah/ah-ah-ah.deployment.yaml
-kubectl -n $AHAHAH_NAMESPACE apply --validate=false https://raw.githubusercontent.com/c0dyhi11/ah-ah-ah/master/ah-ah-ah/ah-ah-ah.service.yaml
+kubecctl create namespace $AHAHAH_NAMESPACE
+kubectl -n $AHAHAH_NAMESPACE apply --validate=false -f https://raw.githubusercontent.com/c0dyhi11/ah-ah-ah/master/ah-ah-ah/ah-ah-ah.configmap.yaml
+kubectl -n $AHAHAH_NAMESPACE apply --validate=false -f https://raw.githubusercontent.com/c0dyhi11/ah-ah-ah/master/ah-ah-ah/ah-ah-ah.deployment.yaml
+kubectl -n $AHAHAH_NAMESPACE apply --validate=false -f https://raw.githubusercontent.com/c0dyhi11/ah-ah-ah/master/ah-ah-ah/ah-ah-ah.service.yaml
 ```
 
 ### [Ingress Rules](https://kubernetes.io/docs/concepts/services-networking/ingress/)
